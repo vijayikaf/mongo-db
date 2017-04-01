@@ -1,7 +1,7 @@
 <?php
 include('config.php');
 $error = array();
-$id = $_REQUEST['id'];
+$id = isset($_REQUEST['id']) ? $_REQUEST['id'] : '';
 $mongo = new MongoDbClass('user');
 if(isset($_POST['save'])){
 	extract($_POST);
@@ -20,7 +20,7 @@ if(isset($_POST['save'])){
 			$condition = array('email'=>$id);			
 			$mongo->update($condition, $document);
 		}else{
-			$mongo->insert($document);	
+			$mongo->insert($document, true);	
 		}
 		header('Location:user-list.php');		
 	}

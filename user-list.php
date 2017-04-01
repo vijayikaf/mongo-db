@@ -3,11 +3,10 @@ include('config.php');
 $mongo = new MongoDbClass('user');
 if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'delete'){
 	$id = $_REQUEST['id'];
-	$condition = array('email'=>$id);
-	$mongo->delete($condition);
+	$condition = array('_id' => $id);
+	$mongo->deleteById($id);
 	header('Location:user-list.php');
 }
-
 
 $results = $mongo->getAll();
 //echo '<pre>';print_r($results);
@@ -29,7 +28,7 @@ $results = $mongo->getAll();
 				<td><?php echo($result['_id']) ?></td>
 				<td><?php echo($result['name']) ?></td>
 				<td><?php echo($result['email']) ?></td>
-				<td><a href="user-add-edit.php?id=<?php echo($result['email']) ?>">Edit</a> / <a href="?action=delete&id=<?php echo($result['email']) ?>">Delete</a></td>
+				<td><a href="user-add-edit.php?id=<?php echo($result['email']) ?>">Edit</a> / <a href="?action=delete&id=<?php echo($result['_id']) ?>">Delete</a></td>
 			</tr>
 	<?php
 		}
